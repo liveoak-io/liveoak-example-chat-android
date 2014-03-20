@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">LiveOak Chat</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="logout_settings">Logout</string>
+
+    <string name="send">Send</string>
+    <string name="defaultUser">Android</string>
+    <string name="noMessages">No Messages Yet. Why don\'t you send one?</string>
+
+    <string name="defaultSender">Sender</string>
+    <string name="defaultMessage">Hello World</string>
+
+    <string name="enterName">Enter Name</string>
+    <string name="saveName">Ok</string>
+
+</resources>
