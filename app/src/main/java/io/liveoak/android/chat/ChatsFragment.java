@@ -29,11 +29,10 @@ public class ChatsFragment extends ListFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View chatsView = inflater.inflate(R.layout.chats_fragment, container, false);
 
-        String name = getActivity().getPreferences(Context.MODE_PRIVATE).getString("name", "Android");
+        String name = getActivity().getSharedPreferences(ChatApplication.LIVEOAK_PREFERENCE_KEY, Context.MODE_PRIVATE).getString(ChatApplication.USERNAME_KEY, "Android");
         ChatAdapter adapter = new ChatAdapter(this.getActivity(), R.layout.chat_fragment, R.layout.chat_fragment_self, name, new ArrayList<Chat>());
         this.setListAdapter(adapter);
         this.adapter = adapter;
@@ -47,7 +46,7 @@ public class ChatsFragment extends ListFragment {
 
     protected void getChats() {
         ChatApplication application = ((ChatApplication) this.getActivity().getApplication());
-        application.getLiveOak().getResource("/chat/storage/chat?expand=members&limit=100", new Callback<JSONObject>() {
+        application.getLiveOak().getResource("/storage/chat?expand=members&limit=100", new Callback<JSONObject>() {
 
             @Override
             public void onSuccess(JSONObject resource) {

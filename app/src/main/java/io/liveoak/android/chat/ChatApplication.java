@@ -36,11 +36,11 @@ public class ChatApplication extends Application {
 
     // LiveOak Settings
     private static final String LIVEOAK_HOST = <INSERT LIVEOAK HOST HERE>; //eg hostname or ip address;
-    private static final int LIVEOAK_PORT = <INSERT LIVEOAK PORT HERE>; //eg 8080;
-    private static final String APPLICATION_NAME = "chat";
+    private static final int LIVEOAK_PORT = 8080; //eg 8080;
+    private static final String APPLICATION_NAME = "chat-html";
     // LiveOak PushSubscription Settings
     private static final String UPS_RESOURCE_NAME = "push";
-    private static final String RESOURCE_SUBSCRIPTION = "/chat/storage/chat/*";
+    private static final String RESOURCE_SUBSCRIPTION = "/storage/chat/*";
     private static final String MESSAGE = "{'alert': 'New message', 'title':'LiveOak Chat'}";
 
 
@@ -50,6 +50,9 @@ public class ChatApplication extends Application {
     /**
      * ******************************************************
      */
+
+    public static final String LIVEOAK_PREFERENCE_KEY = "liveoak";
+    public static final String USERNAME_KEY = "username";
 
     private PushRegistrar registration;
     private LiveOak liveOak;

@@ -30,7 +30,11 @@ public class NotificationHandler implements MessageHandler {
         String resourceURI = message.getString("io.liveoak.push.url");
         String event = message.getString("iol.liveoak.push.event");
 
-        liveOak.getResource(resourceURI, new Callback<JSONObject>() {
+        // the resourceURI returns from the server with the application name already prepended to it
+        // since getResource will also prepend the application name, remove it now so its not added twice
+        String resourceURISansApplication = resourceURI.substring(("/" + liveOak.APPLICATION_NAME).length());
+
+        liveOak.getResource(resourceURISansApplication, new Callback<JSONObject>() {
 
             @Override
             public void onSuccess(JSONObject resource) {
@@ -68,11 +72,11 @@ public class NotificationHandler implements MessageHandler {
 
     @Override
     public void onDeleteMessage(Context context, Bundle arg0) {
-        // handle GoogleCloudMessaging.MESSAGE_TYPE_DELETED
+        //
     }
 
     @Override
     public void onError() {
-        // handle GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR
+        //
     }
 }

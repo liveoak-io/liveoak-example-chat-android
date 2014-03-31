@@ -20,8 +20,8 @@ import java.net.URL;
  */
 public class LiveOak {
 
-    private final String LIVEOAK_URL;
-    private final String APPLICATION_NAME;
+    public final String LIVEOAK_URL;
+    public final String APPLICATION_NAME;
 
     private final String logTag = LiveOak.class.getSimpleName();
 
@@ -48,7 +48,7 @@ public class LiveOak {
         String url = resourceURL;
         // handle relativeURLs if applicable
         if (resourceURL.startsWith("/")) {
-            url = LIVEOAK_URL + resourceURL;
+            url = LIVEOAK_URL + "/" + APPLICATION_NAME + resourceURL;
         }
 
         new GetTask(callback).execute(url);
@@ -62,7 +62,7 @@ public class LiveOak {
      * @return The newly created resource
      */
     public void createResource(String uri, JSONObject jsonObject, Callback<JSONObject> callback) {
-        String url = LIVEOAK_URL + uri;
+        String url = LIVEOAK_URL + "/" + APPLICATION_NAME + uri;
         new PostTask(callback).execute(url, jsonObject);
     }
 
@@ -292,7 +292,7 @@ public class LiveOak {
     }
 
     public PushSubscription createPushSubscription(String pushResourceName, String resourcePath, JSONObject message, String alias) {
-        return new PushSubscription(pushResourceName, resourcePath, message, alias);
+        return new PushSubscription(pushResourceName, APPLICATION_NAME + "/" + resourcePath, message, alias);
     }
 
     public class PushSubscription {

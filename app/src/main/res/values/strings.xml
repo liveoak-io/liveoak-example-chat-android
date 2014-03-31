@@ -15,4 +15,13 @@
     <string name="enterName">Enter Name</string>
     <string name="saveName">Ok</string>
 
+    <!-- chat_login -->
+    <string name="title_activity_login">Log into LiveOak Chat</string>
+    <string name="login_username">Username</string>
+    <string name="login_enter">Enter</string>
+    <string name="login_username_required">Username required</string>
+
+    <!-- submit_fragment -->
+    <string name="submit_no_internet_connection">No network connection, cannot send chats.</string>
+
 </resources>

@@ -1,32 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:orientation="vertical"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:background="#DDDDDD">
+    android:layout_width="match_parent"
+    android:padding="10dp">
 
     <TextView
-        android:id="@+id/user_textview"
-        android:layout_width="wrap_content"
+        android:id="@+id/submit_network_warning"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/defaultUser"
-        android:textSize="20sp"
-        android:padding="2sp" />
+        android:text="@string/submit_no_internet_connection"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:background="@android:color/holo_orange_dark"
+        android:padding="10dp"/>
 
-    <EditText
-        android:id="@+id/edit_message"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:singleLine="true"
-        android:imeActionLabel="@string/send"
-        android:imeOptions="actionSend"/>
+        android:padding="10dp"
+        android:background="#DDDDDD"
+        >
 
-    <Button
-        android:id="@+id/send_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/send" />
+        <TextView
+            android:id="@+id/user_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/defaultUser"
+            android:textSize="20sp"
+            android:padding="2sp" />
 
+        <EditText
+            android:id="@+id/edit_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:imeActionLabel="@string/send"
+            android:imeOptions="actionSend"
+            android:inputType="text|textAutoCorrect" />
+
+        <Button
+            android:id="@+id/send_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send" />
+    </LinearLayout>
 </LinearLayout>

@@ -1,7 +1,11 @@
 package io.liveoak.android.chat;
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,12 +22,15 @@ import org.json.JSONObject;
 
 import io.liveoak.helper.LiveOak;
 
-
 public class SubmitFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener {
 
+    // UI references.
     EditText messageEditText;
-    String name = null;
     TextView nameTextView;
+    TextView networkWarningTextView;
+    Button sendButton;
+
+    String name = null;
 
     private final String logTag = SubmitFragment.class.getSimpleName();
 
@@ -45,7 +52,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, Te
         }
 
         if (name == null) {
-            name = getActivity().getPreferences(Context.MODE_PRIVATE).getString("name", getString(R.string.defaultUser));
+            name = getActivity().getSharedPreferences(ChatApplication.LIVEOAK_PREFERENCE_KEY, Context.MODE_PRIVATE).getString(ChatApplication.USERNAME_KEY, getString(R.string.defaultUser));
         }
 
         View view = inflater.inflate(R.layout.submit_fragment, container, false);
@@ -53,7 +60,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, Te
         TextView nameTextView = (TextView) view.findViewById(R.id.user_textview);
         nameTextView.setText(name);
 
-        Button sendButton = (Button) view.findViewById(R.id.send_button);
+        sendButton = (Button) view.findViewById(R.id.send_button);
         sendButton.setOnClickListener(this);
 
         messageEditText = (EditText) view.findViewById(R.id.edit_message);
@@ -61,7 +68,15 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, Te
 
         this.nameTextView = (TextView) view.findViewById(R.id.user_textview);
 
+
+        this.networkWarningTextView = (TextView) view.findViewById(R.id.submit_network_warning);
+        checkNetworkState();
+
         return view;
+    }
+
+    public NetworkChangeListener createNetworkChangeReceiver() {
+        return new NetworkChangeListener();
     }
 
     @Override
@@ -86,7 +101,7 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, Te
 
         LiveOak liveOak = ((ChatApplication) this.getActivity().getApplication()).getLiveOak();
 
-        liveOak.createResource("/chat/storage/chat", chat.toJSONObject(), new Callback<JSONObject>() {
+        liveOak.createResource("/storage/chat", chat.toJSONObject(), new Callback<JSONObject>() {
 
             @Override
             public void onSuccess(JSONObject jsonObject) {
@@ -99,5 +114,28 @@ public class SubmitFragment extends Fragment implements View.OnClickListener, Te
                 Log.e(logTag, exception.getMessage(), exception);
             }
         });
+    }
+
+    // checks the network state.
+    // If we don't have an active network, then display an error message and disable the submit button
+    protected void checkNetworkState() {
+        ConnectivityManager connectivityManager = (ConnectivityManager)this.getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            networkWarningTextView.setVisibility(View.GONE);
+            sendButton.setEnabled(true);
+        } else {
+            networkWarningTextView.setVisibility(View.VISIBLE);
+            sendButton.setEnabled(false);
+        }
+    }
+
+    // used to check if we have a network connection or not
+    public class NetworkChangeListener extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            checkNetworkState();
+        }
     }
 }
