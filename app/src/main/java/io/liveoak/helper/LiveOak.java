@@ -292,7 +292,7 @@ public class LiveOak {
     }
 
     public PushSubscription createPushSubscription(String pushResourceName, String resourcePath, JSONObject message, String alias) {
-        return new PushSubscription(pushResourceName, APPLICATION_NAME + "/" + resourcePath, message, alias);
+        return new PushSubscription(pushResourceName, "/" + APPLICATION_NAME + resourcePath, message, alias);
     }
 
     public class PushSubscription {
@@ -316,7 +316,7 @@ public class LiveOak {
             //String jsonString = "{ 'resourcePath': '" + resourcePath + "', 'message':" + message + ", 'alias':['" + alias + "']}";
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put("resourcePath", resourcePath);
+                jsonObject.put("resource-path", resourcePath);
                 jsonObject.put("message", message);
 
                 JSONArray aliasArray = new JSONArray();
