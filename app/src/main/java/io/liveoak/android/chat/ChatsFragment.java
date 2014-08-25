@@ -46,11 +46,11 @@ public class ChatsFragment extends ListFragment {
 
     protected void getChats() {
         ChatApplication application = ((ChatApplication) this.getActivity().getApplication());
-        application.getLiveOak().getResource("/storage/chat?expand=members&limit=100", new Callback<JSONObject>() {
+        application.getLiveOak().getResource("/storage/chat?fields=*(*)&limit=100", new Callback<JSONObject>() {
 
             @Override
             public void onSuccess(JSONObject resource) {
-                JSONArray chatArray = (JSONArray) resource.opt("_members");
+                JSONArray chatArray = (JSONArray) resource.opt("members");
 
                 if (chatArray != null) {
 
