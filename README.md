@@ -3,7 +3,7 @@ LiveOak Native Android Chat Application
 
 Features
 --------
-* Native android integration with resources stored in a liveoak instance
+* Native android integration with resources stored in a LiveOak instance
 
 * Native notifications of resource subscription from Google Cloud Messaging (GCM) via integration with the Aerogear Unified Push Server (UPS)
 
@@ -18,7 +18,7 @@ There are three main parts to configuring and setting up the application:
 
 1) Configure and setup an Aerogear UPS instance. This will also require setting up and configuring GCM.
 
-2) Setting up and configuring an LiveOak instance. Since the native application communicates with LiveOak to 
+2) Setting up and configuring an LiveOak instance. Since the native application communicates with LiveOak to
 
 3) Building the Native Android Application
 
@@ -26,9 +26,9 @@ There are three main parts to configuring and setting up the application:
 Aerogear UPS Configuration
 -------------------------------------
 
-For the example to work you will need a running and configured AeroGear UPS server. 
+For the example to work you will need a running and configured AeroGear UPS server.
 
-Please see the [Aerogear Android Push Documentation](http://aerogear.org/docs/guides/aerogear-push-android/) for more detailed information. 
+Please see the [Aerogear Android Push Documentation](http://aerogear.org/docs/guides/aerogear-push-android/) for more detailed information.
 
 ###A high level breakdown of what you will to accomplish:
 
@@ -36,7 +36,7 @@ Please see the [Aerogear Android Push Documentation](http://aerogear.org/docs/gu
 
 If installed correctly you should be able to access the UPS Admin console at http://myhost:myport/unifiedpush-server-0.10.1 [Default admin password is '123'].
 
-Note: since you will be running the application on an external device you will want to bind the UPS server to location that the external device can access. If you are running both the liveoak example and the UPS server on the same machine, you will want to have them running on separate ports. The easiest way to do this is to specify -Djboss.socket.binding.port-offset=1 when starting the UPS server. This will start the wild fly instance on port 8081 instead of 8080.
+Note: since you will be running the application on an external device you will want to bind the UPS server to location that the external device can access. If you are running both the LiveOak example and the UPS server on the same machine, you will want to have them running on separate ports. The easiest way to do this is to specify -Djboss.socket.binding.port-offset=1 when starting the UPS server. This will start the wild fly instance on port 8081 instead of 8080.
 
 2) [Configure this instance for Google Cloud Messaging support](http://aerogear.org/docs/guides/aerogear-push-android/google-setup)
   - Visit the [Google Developer Console](https://console.developers.google.com)
@@ -63,11 +63,11 @@ Note: since you will be running the application on an external device you will w
 LiveOak Configuration
 ------------------------------
 
-For LiveOak you will need to deploy the chat-html hosted application and configure a storage collection to store the chats: 
+For LiveOak you will need to deploy the chat-html hosted application and configure a storage collection to store the chats:
 
 1) Have a MongoDB instance up and running and available at the host and ports specified in the chat-html's application.json file
 
-2) Make sure you have a collection called 'chat' within the database specified in the application.json file. If you do not have a collection called 'chat' you can create it through the liveoak system using the following curl command:
+2) Make sure you have a collection called 'chat' within the database specified in the application.json file. If you do not have a collection called 'chat' you can create it through the LiveOak system using the following curl command:
 
 ```
 curl -X POST --header "Content-Type:application/json" http://10.42.0.1:8080/chat/storage/ --data "{ id: 'chat', capped: true, size: 102400, max:100}"
@@ -129,6 +129,3 @@ Running the Application
 From your Android device, run the 'LiveOak Chat' application. Chats from the application will appear in the hosted html chat application and vise versa. If the application is not in focus you will even receive system notifications about them.
 
 To logout of the chat application and to stop receiving notifications of new chats, just use the 'logout' button from the action bar.
-
-
-
