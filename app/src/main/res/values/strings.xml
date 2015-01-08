@@ -6,6 +6,7 @@
     <string name="logout_settings">Logout</string>
 
     <string name="send">Send</string>
+    <string name="close">Close</string>
     <string name="defaultUser">Android</string>
     <string name="noMessages">No Messages Yet. Why don\'t you send one?</string>
 
@@ -15,6 +16,13 @@
     <string name="enterName">Enter Name</string>
     <string name="saveName">Ok</string>
 
+    <!-- chats_fragment -->
+    <!-- chats_fragment dialog -->
+    <string name="chats_fragment_liveoak_error_dialog_title">Error: Could not connect to LiveOak</string>
+    <string name="chats_fragment_liveoak_error_dialog_message">An error occured while trying to connect to the LiveOak server.</string>
+    <string name="chats_fragment_liveoak_error_dialog_try_again">Retry</string>
+    <string name="chats_fragment_liveoak_error_dialog_exit">Exit</string>
+
     <!-- chat_login -->
     <string name="title_activity_login">Log into LiveOak Chat</string>
     <string name="login_username">Username</string>
@@ -23,5 +31,7 @@
 
     <!-- submit_fragment -->
     <string name="submit_no_internet_connection">No network connection, cannot send chats.</string>
+    <string name="submit_fragment_content_required">Message cannot be empty</string>
+    <string name="submit_fragment_network_required">Cannot send. No Network</string>
 
 </resources>

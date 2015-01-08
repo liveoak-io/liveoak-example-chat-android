@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:paddingTop="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="0dp">
 
     <ListView
         android:id="@android:id/list"
@@ -13,14 +16,25 @@
         android:transcriptMode="alwaysScroll"
         android:divider="@null"
         android:dividerHeight="10dp"
-        android:background="#EEEEEE"
+        android:background="#DDDDDD"
+        android:paddingBottom="10dp"
     />
 
     <TextView
-        android:id="@android:id/empty"
+        android:id="@+id/no_messages"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:text="@string/noMessages"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        android:visibility="gone"
+        android:gravity = "center"/>
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@android:id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity = "center"
+        android:layout_centerInParent="true"
+        />
+
+</RelativeLayout>

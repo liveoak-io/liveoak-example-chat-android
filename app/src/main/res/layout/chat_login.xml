@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:singleLine="true"
-        android:hint="@string/login_username"/>
+        android:hint="@string/login_username"
+        android:imeActionLabel="@string/login_enter"/>
 
     <Button
         android:id="@+id/login_enter_button"
@@ -28,6 +29,7 @@
         android:text="@string/login_username_required"
         style="@android:style/TextAppearance.Small"
         android:gravity="center"
-        android:textColor="@android:color/holo_red_light"/>
+        android:textColor="@android:color/holo_red_light"
+        />
 
 </LinearLayout>
