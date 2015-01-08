@@ -1,0 +1,14 @@
+{
+    liveoak-url: "INSERT YOUR LIVEOAK URL HERE",
+    application-name: "chat-html",
+
+    push: {
+        resource-name: "push",
+        ups-configuration: {
+                ups-url: "INSERT THE URL TO THE UPS SERVER HERE",
+                variant-id: "INSERT YOUR VARIANT ID HERE",
+                variant-secret: "INSERT YOUR VARIANT SECRET HERE",
+                gcm-sender-id: ["INSERT YOUR GCM SENDER ID HERE"]
+        }
+    }
+}

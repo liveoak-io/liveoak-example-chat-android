@@ -1,19 +1,21 @@
 package io.liveoak.helper;
 
-import android.os.AsyncTask;
-import android.util.Log;
-
-import com.google.common.net.HttpHeaders;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import org.jboss.aerogear.android.Callback;
-import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.net.URL;
+
+import io.liveoak.helper.rest.DeleteTask;
+import io.liveoak.helper.rest.GetTask;
+import io.liveoak.helper.rest.PostTask;
+import io.liveoak.helper.rest.PutTask;
 
 /**
  * Created by mwringe on 28/02/14.
@@ -23,18 +25,77 @@ public class LiveOak {
     public final String LIVEOAK_URL;
     public final String APPLICATION_NAME;
 
+    // The key for the liveoak specific shared preferences.
+    final static String LIVEOAK_SHARED_PREFERENCES = "liveoak.io";
+
+    private Context context;
     private final String logTag = LiveOak.class.getSimpleName();
 
-    /**
-     * Creates an object used to interact with a liveoak instance.
-     *
-     * @param host            The host where the liveoak
-     * @param port            The port of the liveoak instance
-     * @param applicationName The application we are interested in
-     */
-    public LiveOak(String host, int port, String applicationName) {
-        this.LIVEOAK_URL = "http://" + host + ":" + port;
+    private LiveOakPush liveOakPush;
+
+    private LiveOak(Context context, URL url, String applicationName) {
+        this.context = context;
+        this.LIVEOAK_URL = url.toString();
         this.APPLICATION_NAME = applicationName;
+    }
+
+    public static LiveOak create(Context context, InputStream jsonInputStream) throws Exception {
+
+        BufferedReader bReader = new BufferedReader(new InputStreamReader(jsonInputStream));
+        StringBuilder json = new StringBuilder();
+        String line = bReader.readLine();
+        while (line != null) {
+            json.append(line);
+            line = bReader.readLine();
+        }
+
+        JSONTokener jsonTokener = new JSONTokener(json.toString());
+        JSONObject jsonObject = new JSONObject(jsonTokener);
+        return create(context, jsonObject);
+    }
+
+    public static LiveOak create(Context context, JSONObject jsonObject) throws Exception {
+        String url = jsonObject.optString("liveoak-url");
+        String applicationName = jsonObject.optString("application-name");
+
+        LiveOak liveOak = new LiveOak(context, new URL(url), applicationName);
+
+        if (jsonObject.has("push")) {
+            LiveOakPush liveOakPush = LiveOakPush.create(liveOak, jsonObject.getJSONObject("push"));
+            liveOak.setPush(liveOakPush);
+        }
+
+        return liveOak;
+    }
+
+    public void setPush(LiveOakPush liveOakPush) {
+        //get the alias fro LiveOak
+
+        //
+        this.liveOakPush = liveOakPush;
+    }
+
+    //TODO: find a better name. SignIn? SignOut?
+    // Should eventually handle things like authorization...
+
+    // Setup everything with the LiveOak instance
+    public void connect(Callback<JSONObject> callback) {
+        //get the alias value from the LiveOak instance
+
+        this.liveOakPush.connect(callback);
+    }
+
+    // disconnect everything from the liveOak instance
+    public void disconnect() {
+
+    }
+
+    Context getContext() {
+        return this.context;
+    }
+
+    SharedPreferences getPreferences() {
+        return context.getSharedPreferences(LiveOak.LIVEOAK_SHARED_PREFERENCES, Context.MODE_PRIVATE);
     }
 
     /**
@@ -66,274 +127,28 @@ public class LiveOak {
         new PostTask(callback).execute(url, jsonObject);
     }
 
-    private final class PostTask extends AsyncTask<Object, Integer, Object> {
-
-        Callback callback;
-
-        private PostTask(Callback<JSONObject> callback) {
-            super();
-            this.callback = callback;
+    public void deleteResource(String resourceURL, Callback<JSONObject> callback) {
+        String url = resourceURL;
+        // handle relativeURLs if applicable
+        if (resourceURL.startsWith("/")) {
+            url = LIVEOAK_URL + "/" + APPLICATION_NAME + resourceURL;
         }
-
-        @Override
-        protected Object doInBackground(Object... params) {
-            String uri = (String) params[0];
-            JSONObject body = (JSONObject) params[1];
-
-            try {
-                URL resourceURL = new URL(uri);
-
-                HttpURLConnection connection = (HttpURLConnection) resourceURL.openConnection();
-                connection.setRequestProperty(HttpHeaders.ACCEPT, "application/json");
-                connection.setRequestProperty(HttpHeaders.CONTENT_TYPE, "application/json");
-                connection.setRequestMethod("POST");
-
-                OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-                writer.write(body.toString());
-                writer.flush();
-                writer.close();
-
-                if (connection.getResponseCode() >= 200 && connection.getResponseCode() < 300) {
-                    InputStreamReader reader = new InputStreamReader(connection.getInputStream());
-
-                    BufferedReader bReader = new BufferedReader(reader);
-
-                    String line = bReader.readLine();
-                    String content = new String();
-                    while (line != null) {
-                        content += line;
-                        line = bReader.readLine();
-                    }
-
-                    return new JSONObject(content);
-                }
-
-            } catch (Exception e) {
-                return e;
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Object result) {
-            if (result instanceof JSONObject) {
-                this.callback.onSuccess((JSONObject) result);
-            } else {
-                this.callback.onFailure((Exception) result);
-            }
-        }
+        new DeleteTask(callback).execute(url);
     }
 
-    private final class GetTask extends AsyncTask<String, Integer, Object> {
-
-        Callback callback;
-
-        private GetTask(Callback<JSONObject> callback) {
-            super();
-            this.callback = callback;
+    public void updateResource(String resourceURL, JSONObject jsonObject, Callback<JSONObject> callback) {
+        String url = resourceURL;
+        // handle relativeURLs if applicable
+        if (resourceURL.startsWith("/")) {
+            url = LIVEOAK_URL + "/" + APPLICATION_NAME + resourceURL;
         }
-
-        @Override
-        protected Object doInBackground(String... params) {
-
-            String resourceURLParam = params[0];
-
-            try {
-                URL resourceURL = new URL(resourceURLParam);
-
-                HttpURLConnection connection = (HttpURLConnection) resourceURL.openConnection();
-
-                connection.setRequestProperty(HttpHeaders.ACCEPT, "application/json");
-                connection.setRequestMethod("GET");
-
-                if (connection.getResponseCode() <= 200 && connection.getResponseCode() < 300) {
-                    InputStreamReader reader = new InputStreamReader(connection.getInputStream());
-
-                    BufferedReader bReader = new BufferedReader(reader);
-
-                    String line = bReader.readLine();
-                    String content = new String();
-                    while (line != null) {
-                        content += line;
-                        line = bReader.readLine();
-                    }
-
-                    return new JSONObject(content);
-                } else {
-                    throw new Exception("Error trying to get resource: " + connection.getResponseCode());
-                }
-            } catch (Exception e) {
-                return e;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Object result) {
-            if (result instanceof JSONObject) {
-                this.callback.onSuccess((JSONObject) result);
-            } else {
-                this.callback.onFailure((Exception) result);
-            }
-        }
+        new PutTask(callback).execute(url, jsonObject);
     }
 
-    private final class PutTask extends AsyncTask<Object, Integer, Object> {
-
-        Callback callback;
-
-        private PutTask(Callback<JSONObject> callback) {
-            super();
-            this.callback = callback;
+    public void subscribe(String resourcePath, JSONObject message, Callback<JSONObject> callback ) {
+        if (resourcePath.startsWith("/")) {
+            resourcePath = "/" + APPLICATION_NAME + resourcePath;
         }
-
-        @Override
-        protected Object doInBackground(Object... params) {
-            String uri = (String) params[0];
-            JSONObject body = (JSONObject) params[1];
-
-            try {
-                URL resourceURL = new URL(uri);
-
-                HttpURLConnection connection = (HttpURLConnection) resourceURL.openConnection();
-                connection.setRequestProperty(HttpHeaders.ACCEPT, "application/json");
-                connection.setRequestProperty(HttpHeaders.CONTENT_TYPE, "application/json");
-                connection.setRequestMethod("PUT");
-
-                OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-                writer.write(body.toString());
-                writer.flush();
-                writer.close();
-
-                if (connection.getResponseCode() >= 200 && connection.getResponseCode() < 300) {
-                    InputStreamReader reader = new InputStreamReader(connection.getInputStream());
-
-                    BufferedReader bReader = new BufferedReader(reader);
-
-                    String line = bReader.readLine();
-                    String content = new String();
-                    while (line != null) {
-                        content += line;
-                        line = bReader.readLine();
-                    }
-
-                    return new JSONObject(content);
-                } else {
-                    return new Exception("Error while trying to create resource: " + connection.getResponseCode());
-                }
-
-
-            } catch (Exception e) {
-               return e;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Object result) {
-            if (result instanceof JSONObject) {
-                this.callback.onSuccess((JSONObject) result);
-            } else {
-                this.callback.onFailure((Exception) result);
-            }
-        }
-    }
-
-
-    private final class DeleteTask extends AsyncTask<String, Integer, Object> {
-
-        Callback callback;
-
-        private DeleteTask(Callback<JSONObject> callback) {
-            super();
-            this.callback = callback;
-        }
-
-        @Override
-        protected Object doInBackground(String... params) {
-            String resourceURLParam = params[0];
-
-            try {
-                URL resourceURL = new URL(resourceURLParam);
-
-                HttpURLConnection connection = (HttpURLConnection) resourceURL.openConnection();
-
-                connection.setRequestProperty(HttpHeaders.ACCEPT, "application/json");
-                connection.setRequestMethod("DELETE");
-
-                if (connection.getResponseCode() >= 200 && connection.getResponseCode() < 300) {
-                    InputStreamReader reader = new InputStreamReader(connection.getInputStream());
-
-                    BufferedReader bReader = new BufferedReader(reader);
-
-                    String line = bReader.readLine();
-                    String content = new String();
-                    while (line != null) {
-                        content += line;
-                        line = bReader.readLine();
-                    }
-
-                    return new JSONObject(content);
-                } else {
-                    return new Exception("Error while trying to delete resource: " + connection.getResponseCode());
-                }
-            } catch (Exception e) {
-                return e;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Object result) {
-            if (result instanceof JSONObject) {
-                this.callback.onSuccess((JSONObject) result);
-            } else {
-                this.callback.onFailure((Exception) result);
-            }
-        }
-    }
-
-    public PushSubscription createPushSubscription(String pushResourceName, String resourcePath, JSONObject message, String alias) {
-        return new PushSubscription(pushResourceName, "/" + APPLICATION_NAME + resourcePath, message, alias);
-    }
-
-    public class PushSubscription {
-
-        private String resourcePath;
-        private JSONObject message;
-        private String alias;
-        private String pushResourceName;
-
-
-        private PushSubscription(String pushResourceName, String resourcePath, JSONObject message, String alias) {
-            this.pushResourceName = pushResourceName;
-            this.resourcePath = resourcePath;
-            this.message = message;
-            this.alias = alias;
-        }
-
-        public void subscribe(Callback<JSONObject> callback) {
-            String subscribeURL = LIVEOAK_URL + "/" + APPLICATION_NAME + "/" + pushResourceName + "/subscriptions/" + alias;
-
-            //String jsonString = "{ 'resourcePath': '" + resourcePath + "', 'message':" + message + ", 'alias':['" + alias + "']}";
-            JSONObject jsonObject = new JSONObject();
-            try {
-                jsonObject.put("resource-path", resourcePath);
-                jsonObject.put("message", message);
-
-                JSONArray aliasArray = new JSONArray();
-                aliasArray.put(alias);
-
-                jsonObject.put("alias", aliasArray);
-            } catch (Exception e) {
-                Log.e(logTag, "Error trying to create subscribe json object", e);
-                throw new RuntimeException(e);
-            }
-
-            new PutTask(callback).execute(subscribeURL, jsonObject);
-        }
-
-        public void unsubscribe(Callback<JSONObject> callback) {
-            String unsubscribeURL = LIVEOAK_URL + "/" + APPLICATION_NAME + "/" + pushResourceName + "/subscriptions";
-            new DeleteTask(callback).execute(unsubscribeURL + "/" + alias);
-        }
+        liveOakPush.subscribe(resourcePath, message, callback);
     }
 }
