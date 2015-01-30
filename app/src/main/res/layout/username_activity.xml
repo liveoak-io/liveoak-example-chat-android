@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/username_activity_padding_vertical"
+    android:paddingRight="@dimen/username_activity_padding_vertical"
+    android:gravity="center_vertical"
+    tools:context=".UsernameActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/username_fragment_margin_top_title"
+        android:text="@string/username_activity_enter"
+        android:textSize="@dimen/username_fragment_label_text_size"
+        />
+
+    <EditText
+        android:id="@+id/username_activity_username_edittext"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/username_activity_hint"
+        android:paddingTop="@dimen/username_fragment_padding_horizontal_editText"
+        android:layout_marginBottom="@dimen/username_fragment_padding_horizontal_editText"
+        android:textSize="@dimen/username_fragment_editText_text_size"
+        android:singleLine="true"
+        android:imeActionLabel="@string/username_activity_ime_action"
+        android:inputType="textCapSentences"
+        />
+
+    <Button
+        android:id="@+id/username_activity_submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/username_activity_submit"
+        android:layout_gravity="right"
+        android:onClick="onClick"
+        android:enabled="false"
+        />
+
+</LinearLayout>

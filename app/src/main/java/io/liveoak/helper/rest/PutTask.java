@@ -11,7 +11,7 @@ import java.net.URL;
 public class PutTask extends RESTTask {
 
     public PutTask(Callback<JSONObject> callback) {
-       super(callback);
+        super(callback);
     }
 
     @Override

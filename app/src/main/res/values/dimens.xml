@@ -3,4 +3,23 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    </resources>
+    <dimen name="button_text_size">14dp</dimen>
+
+    <!-- Username Activity -->
+    <dimen name="username_activity_padding_vertical">16dp</dimen>
+    <dimen name="username_fragment_margin_top_title">32dp</dimen>
+    <dimen name="username_fragment_label_text_size">16dp</dimen>
+    <dimen name="username_fragment_padding_horizontal_editText">24dp</dimen>
+    <dimen name="username_fragment_editText_text_size">16dp</dimen>
+
+    <!-- Submit Fragment -->
+    <dimen name="submit_fragment_horizontal_margin">10dp</dimen>
+    <dimen name="submit_fragment_vertical_margin">6dp</dimen>
+    <dimen name="submit_fragment_font_size">14dp</dimen>
+
+    <!-- Chats Fragment -->
+    <dimen name="chats_fragment_message_width">250dp</dimen>
+    <dimen name="chats_fragment_no_message_font_size">18dp</dimen>
+
+
+</resources>

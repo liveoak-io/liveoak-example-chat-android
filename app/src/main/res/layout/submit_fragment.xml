@@ -1,64 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_height="wrap_content"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/submit_fragment_background"
+    android:paddingLeft="0dp"
     android:paddingTop="0dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingBottom="10dp">
+    android:paddingBottom="0dp"
+    tools:context="io.liveoak.example.android.chat.SubmitFragment">
 
-    <TextView
-        android:id="@+id/submit_network_warning"
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/submit_fragment_message"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/submit_no_internet_connection"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:background="@android:color/holo_orange_dark"
-        android:padding="10dp"
-        android:layout_marginTop="15dp"/>
-
-    <ProgressBar
-        android:id="@+id/sending_progress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        style="@android:style/Widget.Holo.ProgressBar.Horizontal"
-        android:visibility="invisible"/>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:background="#DDDDDD"
-        >
-
-        <TextView
-            android:id="@+id/user_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/defaultUser"
-            android:textSize="20sp"
-            android:padding="2sp" />
-
-        <EditText
-            android:id="@+id/edit_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:imeActionLabel="@string/send"
-            android:imeOptions="actionSend"
-            android:inputType="text|textAutoCorrect|textShortMessage" />
-
-        <Button
-            android:id="@+id/send_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/send"
-            android:enabled="false"
+        android:layout_weight="1"
+        android:inputType="text|textAutoCorrect|textShortMessage"
+        android:background="@drawable/rounder_corners"
+        android:hint="@string/submit_fragment_edit_message_hint"
+        android:layout_marginLeft="@dimen/submit_fragment_horizontal_margin"
+        android:layout_marginTop="@dimen/submit_fragment_vertical_margin"
+        android:layout_marginBottom="@dimen/submit_fragment_vertical_margin"
+        android:textSize="@dimen/submit_fragment_font_size"
         />
-    </LinearLayout>
+
+    <Button
+        android:id="@+id/submit_fragment_submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submit_fragment_send"
+        android:enabled="true"
+        style="?android:attr/borderlessButtonStyle"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="normal"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_gravity="center_vertical"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:textSize="@dimen/submit_fragment_font_size"
+        />
+
 </LinearLayout>

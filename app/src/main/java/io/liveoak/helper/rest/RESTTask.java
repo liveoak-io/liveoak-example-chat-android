@@ -21,7 +21,7 @@ public abstract class RESTTask extends AsyncTask<Object, Integer, Object> {
 
     Callback callback;
 
-    enum Method { GET, POST, DELETE, PUT}
+    enum Method {GET, POST, DELETE, PUT}
 
     public RESTTask(Callback<JSONObject> callback) {
         super();

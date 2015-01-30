@@ -2,36 +2,44 @@
 <resources>
 
     <string name="app_name">LiveOak Chat</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="logout_settings">Logout</string>
+    <string name="user_settings">User</string>
 
-    <string name="send">Send</string>
-    <string name="close">Close</string>
-    <string name="defaultUser">Android</string>
-    <string name="noMessages">No Messages Yet. Why don\'t you send one?</string>
+    <!-- Username Fragment -->
+    <string name="username_activity_enter">Enter username</string>
+    <string name="username_activity_hint">Username</string>
+    <string name="username_activity_submit">Go to chat</string>
+    <string name="username_activity_username_required">A username is required</string>
+    <string name="username_activity_ime_action">Enter</string>
 
-    <string name="defaultSender">Sender</string>
-    <string name="defaultMessage">Hello World</string>
+    <!-- User Dialog -->
+    <string name="user_dialog_title">User Settings</string>
+    <string name="user_dialog_logout">Logout?</string>
+    <string name="user_dialog_cancel_button">Cancel</string>
+    <string name="user_dialog_logout_button">Logout</string>
 
-    <string name="enterName">Enter Name</string>
-    <string name="saveName">Ok</string>
+    <!-- Submit Fragment -->
+    <string name="submit_fragment_send">SEND</string>
+    <string name="submit_fragment_edit_message_hint">Send a message....</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!-- chats_fragment -->
-    <!-- chats_fragment dialog -->
-    <string name="chats_fragment_liveoak_error_dialog_title">Error: Could not connect to LiveOak</string>
-    <string name="chats_fragment_liveoak_error_dialog_message">An error occured while trying to connect to the LiveOak server.</string>
-    <string name="chats_fragment_liveoak_error_dialog_try_again">Retry</string>
-    <string name="chats_fragment_liveoak_error_dialog_exit">Exit</string>
+    <!-- Chats Fragment -->
+    <string name="chats_fragment_connecting">Connecting</string>
+    <string name="chats_fragment_no_messages">No messages have been sent yet. Why don\'t you start a conversation?</string>
+    <string name="chats_fragment_no_message_icon">&#xf0e6;</string>
 
-    <!-- chat_login -->
-    <string name="title_activity_login">Log into LiveOak Chat</string>
-    <string name="login_username">Username</string>
-    <string name="login_enter">Enter</string>
-    <string name="login_username_required">Username required</string>
+    <!-- Chat Fragment -->
+    <string name="chat_fragment_empty_character">X</string>
+    <string name="chat_fragment_empty_name">Name</string>
+    <string name="chat_fragment_empty_message">Message to go here.</string>
+    <string name="chat_fragment_status_sending">Sending</string>
+    <string name="chat_fragment_status_sent">Sent</string>
+    <string name="chat_fragment_status_received">Received</string>
 
-    <!-- submit_fragment -->
-    <string name="submit_no_internet_connection">No network connection, cannot send chats.</string>
-    <string name="submit_fragment_content_required">Message cannot be empty</string>
-    <string name="submit_fragment_network_required">Cannot send. No Network</string>
+    <!-- Chat Notification -->
+    <string name="chat_notification_title_message">A message has arrived</string>
+    <string name="chat_notification_title_messages">Messages have arrived</string>
+    <string name="chat_notification_text_message">You have one new message</string>
+    <string name="chat_notification_text_messages">You have ${MESSAGE_COUNT} new messages</string>
+
 
 </resources>

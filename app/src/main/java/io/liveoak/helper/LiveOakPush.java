@@ -1,22 +1,13 @@
 package io.liveoak.helper;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
-import android.view.ContextThemeWrapper;
-import android.widget.Toast;
 
 import org.jboss.aerogear.android.Callback;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import io.liveoak.helper.rest.RestResponseException;
 
 /**
  * Created by mwringe on 29/05/14.
@@ -63,7 +54,7 @@ public class LiveOakPush {
     }
 
     public void subscribe(String resourcePath, JSONObject message, Callback<JSONObject> callback) {
-        PushSubscription subscription = new PushSubscription(liveOak, resourceName, resourcePath, message, alias, Base64.encodeToString("resourcePath".getBytes(), Base64.DEFAULT) );
+        PushSubscription subscription = new PushSubscription(liveOak, resourceName, resourcePath, message, alias, Base64.encodeToString("resourcePath".getBytes(), Base64.DEFAULT));
         subscriptions.put(resourcePath, subscription);
         subscription.subscribe(callback);
     }
@@ -109,6 +100,7 @@ public class LiveOakPush {
 
     void initializeUPS(String alias, final Callback<JSONObject> callback) {
         liveOakUPS.setAlias(alias);
+
         liveOakUPS.connect(new Callback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject o) {
@@ -125,7 +117,7 @@ public class LiveOakPush {
     void disconnect(final Callback<JSONObject> callback) {
         liveOakUPS.disconnect(callback);
         //TODO: properly handle all the callbacks
-        for (PushSubscription subscription: subscriptions.values()) {
+        for (PushSubscription subscription : subscriptions.values()) {
             subscription.unsubscribe(alias, new Callback<JSONObject>() {
                 @Override
                 public void onSuccess(JSONObject jsonObject) {

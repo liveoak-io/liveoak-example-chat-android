@@ -1,25 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.liveoak.android.chat" >
+    package="io.liveoak.example.android.chat" >
 
+    <!-- PERMISSIONS REQUIRED -->
+    <!-- INTERNET: in order to access a network -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <!-- VIBRATE: Can vibrate the device when a notification is received -->
     <uses-permission android:name="android.permission.VIBRATE" />
 
-    <permission
-        android:name="io.liveoak.android.chat.chatapplication.permission.C2D_MESSAGE"
+    <!-- Permissions required for messaging -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="io.liveoak.example.android.chat.chatapplication.permission.C2D_MESSAGE" />
+    <permission android:name="io.liveoak.example.android.chat.chatapplication.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+    <!-- /PERMISSIONS REQUIRED -->
 
-    <uses-permission android:name="io.liveoak.android.chat.chatapplication.permission.C2D_MESSAGE" />
+
 
     <application
-        android:name="io.liveoak.android.chat.ChatApplication"
+        android:name=".ChatApplication"
         android:allowBackup="true"
-        android:icon="@drawable/application_icon"
+        android:icon="@drawable/liveoak_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <activity
+            android:name=".ChatActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".UsernameActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateVisible|adjustResize">
+        </activity>
 
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 
@@ -28,32 +48,14 @@
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
                 <category android:name="io.liveoak.android.chat.chatapplication" />
             </intent-filter>
 
             <meta-data
                 android:name="DEFAULT_MESSAGE_HANDLER_KEY"
-                android:value="io.liveoak.android.chat.NotificationHandler" />
+                android:value="io.liveoak.example.android.chat.NotificationHandler" />
         </receiver>
 
-        <activity android:name=".ChatActivity"
-            android:label="@string/app_name"
-            android:windowSoftInputMode="stateVisible|adjustResize|stateAlwaysHidden"
-            android:launchMode="singleTask"> <!--TEST  singleTask-->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="io.liveoak.android.chat.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            >
-        </activity>
     </application>
 
 </manifest>

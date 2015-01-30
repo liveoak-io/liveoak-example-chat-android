@@ -68,7 +68,7 @@ public class LiveOak {
         return liveOak;
     }
 
-    public void setPush(LiveOakPush liveOakPush) {
+    private void setPush(LiveOakPush liveOakPush) {
         //get the alias fro LiveOak
 
         //
@@ -145,7 +145,7 @@ public class LiveOak {
         new PutTask(callback).execute(url, jsonObject);
     }
 
-    public void subscribe(String resourcePath, JSONObject message, Callback<JSONObject> callback ) {
+    public void subscribe(String resourcePath, JSONObject message, Callback<JSONObject> callback) {
         if (resourcePath.startsWith("/")) {
             resourcePath = "/" + APPLICATION_NAME + resourcePath;
         }
