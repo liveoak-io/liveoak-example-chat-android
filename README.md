@@ -100,7 +100,7 @@ This example uses gradle to build the native android application. You can build 
 
 ### Building from the Command Line
 
-From the command line, within the chat-android directory, run the following:
+From the command line, within the liveoak-example-chat-android directory, run the following:
 
 ```
 $export ANDROID_HOME=/path/where/your/Android/SDK/is/installed
@@ -111,7 +111,7 @@ Your .apk should now be build and available in the app/build/apk directory.
 
 ### Importing and building from Android Developer Studio
 
-From the Android Developer Studio, you should be able to open the project from liveoak-examples/chat/chat-android
+From the Android Developer Studio, you should be able to import the project directly
 
 From here please see the Android Developer Studio [documentation](http://developer.android.com/sdk/installing/studio.html) for how to build and deploy the application to a running device.
 
