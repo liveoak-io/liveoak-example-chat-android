@@ -26,7 +26,7 @@ public class RestResponseException extends Exception {
         if (jsonObject == null) {
             return this.getClass().getName() + ": { path: " + path + ", response-code: " + responseCode + "}";
         } else {
-             return this.getClass().getName() + ": { path: " + path + ", response-code: " + responseCode + ", error-message: " + jsonObject.toString() + "}";
+            return this.getClass().getName() + ": { path: " + path + ", response-code: " + responseCode + ", error-message: " + jsonObject.toString() + "}";
         }
     }
 }

@@ -16,7 +16,7 @@ public class GetTask extends RESTTask {
 
     @Override
     protected Object doInBackground(Object... params) {
-        String resourceURLParam = (String)params[0];
+        String resourceURLParam = (String) params[0];
 
         try {
             return request(new URL(resourceURLParam), Method.GET);

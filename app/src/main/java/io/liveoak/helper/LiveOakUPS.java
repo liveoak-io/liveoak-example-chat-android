@@ -1,8 +1,5 @@
 package io.liveoak.helper;
 
-import android.content.Context;
-import android.os.Build;
-
 import org.jboss.aerogear.android.Callback;
 import org.jboss.aerogear.android.unifiedpush.PushConfig;
 import org.jboss.aerogear.android.unifiedpush.PushRegistrar;
@@ -12,8 +9,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by mwringe on 01/05/14.
@@ -40,7 +35,7 @@ public class LiveOakUPS {
         JSONArray jsonArray = jsonObject.getJSONArray("gcm-sender-id");
         String[] gcmIds = new String[jsonArray.length()];
         for (int i = 0; i < gcmIds.length; i++) {
-            gcmIds[i] = (String)jsonArray.get(i);
+            gcmIds[i] = (String) jsonArray.get(i);
         }
 
         PushConfig pushConfig = new PushConfig(new URI(upsURL), gcmIds);

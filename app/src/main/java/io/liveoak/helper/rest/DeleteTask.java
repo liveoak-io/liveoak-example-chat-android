@@ -3,7 +3,6 @@ package io.liveoak.helper.rest;
 import org.jboss.aerogear.android.Callback;
 import org.json.JSONObject;
 
-import java.net.URI;
 import java.net.URL;
 
 /**

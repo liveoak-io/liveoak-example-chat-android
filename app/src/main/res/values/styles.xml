@@ -1,8 +1,74 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textColorHint">@color/textHintColor</item>
+        <item name="android:buttonStyle">@style/LiveOakChatButton</item>
     </style>
+
+    <!-- Button style -->
+    <style name="LiveOakChatButton"
+        parent="@android:style/Widget.Button">
+        <item name="android:background">#00000000</item>
+        <item name="android:textColor">@color/button_color</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="LiveOakAlertDialog"
+        parent="Base.Theme.AppCompat.Light.Dialog">
+
+        <item name="android:colorBackground">#FFFFFF</item>
+        <item name="android:textColorPrimary">@color/light_grey</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <color name="textColor">#404040</color>
+    <color name="textHintColor">@color/light_grey</color>
+
+    <color name="disabled">@color/light_grey</color>
+
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorPrimaryDark">#388E3C</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="separator_grey">#F6F6F6</color>
+    <color name="stroke_grey">#D7D7D7</color>
+
+    <color name="light_grey">#D2D2D2</color>
+
+    <color name="conversation_grey">#DDDDDD</color>
+
+    <color name="progress_start">@color/colorPrimaryDark</color>
+    <color name="progress_center">@color/colorPrimary</color>
+    <color name="progress_end">#96CD86</color>
+
+
+    <!-- colors for the chat icons -->
+    <array name="icon_colors">
+        <item>#F44336</item>
+        <item>#E91E63</item>
+        <item>#9C27B0</item>
+        <item>#673AB7</item>
+        <item>#3F51B5</item>
+        <item>#2196F3</item>
+        <item>#03A9F4</item>
+        <item>#00BCD4</item>
+        <item>#009688</item>
+        <item>#4CAF50</item>
+        <item>#8BC34A</item>
+        <item>#CDDC39</item>
+        <item>#FFEB3B</item>
+        <item>#FFC107</item>
+        <item>#FF9800</item>
+        <item>#FF5722</item>
+        <item>#795548</item>
+        <item>#9E9E9E</item>
+        <item>#607D8B</item>
+        <item>#000000</item>
+    </array>
 
 </resources>

@@ -3,11 +3,7 @@ package io.liveoak.helper;
 import android.util.Log;
 
 import org.jboss.aerogear.android.Callback;
-import org.json.JSONArray;
 import org.json.JSONObject;
-
-import io.liveoak.helper.rest.DeleteTask;
-import io.liveoak.helper.rest.PutTask;
 
 /**
  * Created by mwringe on 01/05/14.
